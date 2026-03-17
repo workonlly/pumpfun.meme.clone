@@ -1,3 +1,3 @@
 // src/constants.ts
-export const LAUNCHPAD_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-export const BLOCK_NUMBER = 1;
+export const LAUNCHPAD_ADDRESS = "0xD9fCc7f3CF8FBD662f30FeF642d8c80cE2bDCF9B";
+export const DEPLOYMENT_BLOCK = BigInt(10463674);

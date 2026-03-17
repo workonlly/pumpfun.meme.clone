@@ -5,8 +5,8 @@ import { useParams } from 'next/navigation';
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { parseEther, type Abi } from 'viem';
 import launchpadArtifact from '../../../contracts/out/Counter.sol/MemeCoinLaunchPad.json';
+import { LAUNCHPAD_ADDRESS } from '../../constant';
 
-const LAUNCHPAD_ADDRESS = "0xD9fCc7f3CF8FBD662f30FeF642d8c80cE2bDCF9B";
 const launchpadAbi = launchpadArtifact.abi as Abi;
 
 export default function TradePage() {

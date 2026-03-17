@@ -5,8 +5,8 @@ import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { parseEther } from 'viem';
 import type { Abi } from 'viem';
 import launchpadAbi from '../../contracts/out/Counter.sol/MemeCoinLaunchPad.json';
+import { LAUNCHPAD_ADDRESS } from '../constant';
 
-const LAUNCHPAD_ADDRESS = "0xD9fCc7f3CF8FBD662f30FeF642d8c80cE2bDCF9B";
 const abi = launchpadAbi.abi as Abi;
 
 export default function Create() {

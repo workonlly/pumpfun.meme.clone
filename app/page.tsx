@@ -4,25 +4,26 @@ import Script from "next/script";
 import Link from "next/link"; // <-- ADDED THIS IMPORT
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
-import { createPublicClient, http, parseAbiItem, type Abi } from "viem";
+import { createPublicClient, fallback, http, parseAbiItem, type Abi } from "viem";
 import {sepolia } from "viem/chains";
+import { DEPLOYMENT_BLOCK, LAUNCHPAD_ADDRESS } from "./constant";
 
 // 1. IMPORT YOUR ABI (Crucial for reading the 'coins' mapping)
 import launchpadArtifact from '../contracts/out/Counter.sol/MemeCoinLaunchPad.json';
 
-const LAUNCHPAD_ADDRESS = "0xD9fCc7f3CF8FBD662f30FeF642d8c80cE2bDCF9B";
 const launchpadAbi = launchpadArtifact.abi as Abi;
-const DEPLOYMENT_BLOCK = BigInt(10463674);
 const LOG_RANGE = BigInt(900);
-const rawRpcUrl = process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL;
-const sepoliaRpcUrl = rawRpcUrl?.trim().replace(/^['\"]|['\"]$/g, "");
 
 const coinCreatedEvent = parseAbiItem('event CoinCreated(address indexed tokenAddress, address indexed creator, string name, string symbol)');
 const coinPurchasedEvent = parseAbiItem('event CoinPurchased(address indexed coin, address indexed buyer, uint256 amount, uint256 cost)');
 
 const publicClient = createPublicClient({
   chain: sepolia,
-  transport: http(sepoliaRpcUrl)
+  transport: fallback([
+    http("https://ethereum-sepolia-rpc.publicnode.com", { retryCount: 1, timeout: 8000 }),
+    http("https://sepolia.gateway.tenderly.co", { retryCount: 1, timeout: 8000 }),
+    http("https://rpc.sepolia.org", { retryCount: 1, timeout: 8000 }),
+  ])
 });
 
 // Upgraded Token type
